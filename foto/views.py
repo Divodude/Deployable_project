@@ -169,14 +169,14 @@ def sign_up(reuqest):
         
         user=User.objects.filter(username=email)
         if user.exists():
-            HttpResponse("user exist")
+            return HttpResponse("user exist")
         user=User.objects.create_user(username=email)
         
         user.set_password(password)
         user.save()
         profile.objects.create(user=user,avater=image)
         
-        redirect("auth")
+        return redirect("auth")
 
         
         
