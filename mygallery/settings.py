@@ -149,6 +149,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Initialize Firebase Admin
+firebase_json = os.getenv("FIREBASE_CREDENTIALS_JSON")
 if firebase_json:
     try:
         cred = credentials.Certificate(json.loads(firebase_json))
