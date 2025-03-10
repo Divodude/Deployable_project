@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 DEBUG_PROPAGATE_EXCEPTIONS = os.getenv('DEBUG_PROPAGATE_EXCEPTIONS', 'True') == 'True'
@@ -149,11 +149,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Initialize Firebase Admin
-#CSRF_TRUSTED_ORIGINS = ["https://mygallery2-production.up.railway.app/"]
-CSRF_COOKIE_SECURE = False
-
-"""# Initialize Firebase Admin
-cred = credentials.Certificate(r"foto\face-recognition-3ba91-firebase-adminsdk-oxih3-fb8827bdc6.json")
+firebase_json = os.getenv("FIREBASE_CREDENTIALS_JSON")
+cred = credentials.Certificate(json.loads(firebase_json))
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'face-recognition-3ba91.appspot.com'
 })
