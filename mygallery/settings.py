@@ -149,10 +149,15 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Initialize Firebase Admin
-firebase_json = os.getenv("FIREBASE_CREDENTIALS_JSON")
-cred = credentials.Certificate(json.loads(firebase_json))
-firebase_admin.initialize_app(cred, {
-    'storageBucket': 'face-recognition-3ba91.appspot.com'
-})
+if firebase_json:
+    try:
+        cred = credentials.Certificate(json.loads(firebase_json))
+        firebase_admin.initialize_app(cred, {
+            'storageBucket': 'face-recognition-3ba91.appspot.com'
+        })
+    except json.JSONDecodeError as e:
+        print(f"🚨 ERROR: Invalid JSON format in FIREBASE_CREDENTIALS_JSON: {e}")
+else:
+    print("🚨 ERROR: FIREBASE_CREDENTIALS_JSON is missing! Firebase not initialized.")
 
 DEFAULT_FILE_STORAGE = 'foto.storages.backends.firebase.FirebaseStorage'
