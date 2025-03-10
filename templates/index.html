@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelVault - Photo Gallery</title>
+    <title>DjangoVault - Photo Gallery</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,10 +62,10 @@
         }
         
         .sidebar-brand {
-            height: 50px;
+            height: 51px;
             width: 50px;
             background:white;
-            padding:15px 1px;
+            padding:8px 1px;
             margin-bottom: 20px;
             
             display: flex;
@@ -602,8 +602,8 @@
           
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="sidebar-brand">
-                    <img src="https://cdn.iiitu.ac.in/uploads/clubs/picxcel1726210189556-785072670.webp" alt="Logo">
-                    <span>PixelVault</span>
+                    <img src="{% static 'djn.png' %}" alt="Logo">
+                    <span>DjangoVault</span>
                 </div>
                 <div class="position-sticky">
                     <ul class="nav flex-column">
@@ -613,12 +613,7 @@
                                 <span>Gallery</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-compass"></i>
-                                <span>Explore</span>
-                            </a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'ai_photos' %}">
                                 <i class="bi bi-stars"></i>
@@ -631,12 +626,7 @@
                                 <span>Clubs</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-bookmark"></i>
-                                <span>Favorites</span>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="bi bi-calendar-event"></i>
@@ -849,9 +839,7 @@
                     
                     <!-- Load More Button -->
                     <div class="text-center mt-4 mb-5">
-                        <button class="btn btn-outline-primary px-4 py-2">
-                            <i class="bi bi-arrow-down-circle me-2"></i> Load More
-                        </button>
+                        
                     </div>
                 </div>
                 
@@ -906,12 +894,12 @@
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-4 mt-5">
     <div class="container">
-        <p class="mb-2">&copy; 2024 PixelVault. All rights reserved.</p>
+        <p class="mb-2">&copy; 2024 DjangoVault. All rights reserved.</p>
         <div class="social-links">
             <a href="https://github.com/Divodude" target="_blank" class="text-white">
                 <i class="bi bi-github"></i>
             </a>
-            <a href="https://www.instagram.com/divyansh_279/" target="_blank" class="text-white">
+            <a href="https://www.instagram.com/divodude/?__pwa=1" target="_blank" class="text-white">
                 <i class="bi bi-instagram"></i>
             </a>
             <a href="https://www.linkedin.com/in/divyansh-yadav-15618626b/" target="_blank" class="text-white">

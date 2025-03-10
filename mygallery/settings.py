@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%-a0c$-si4i)$)2r@rs!=j3yp)9iyt1^8myb0f=3c)9@y=ok9g'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*',"mygallery2-production.up.railway.app"]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+DEBUG_PROPAGATE_EXCEPTIONS = os.getenv('DEBUG_PROPAGATE_EXCEPTIONS', 'True') == 'True'
 
 
 # Application definition
@@ -40,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'foto.apps.FotoConfig',
     'rest_framework'
-    
 ]
 
 MIDDLEWARE = [
@@ -108,23 +112,22 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', 'en-us')
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = os.getenv('TIME_ZONE', 'Asia/Kolkata')
 
-USE_I18N = True
+USE_I18N = os.getenv('USE_I18N', 'True') == 'True'
 
-USE_TZ = True
+USE_TZ = os.getenv('USE_TZ', 'True') == 'True'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-MEDIA_URL='/userimages/'
-#STATIC_URL = 'http://10.21.10.1:8080/files/'
+MEDIA_URL = os.getenv('MEDIA_URL', 'gs://face-recognition-3ba91.appspot.com/')
+STATIC_URL = os.getenv('STATIC_URL', '/static/')
 
-STATIC_URL ='/static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,"static")]
-MEDIA_ROOT=BASE_DIR / "userimages"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+MEDIA_ROOT = BASE_DIR / "userimages"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -133,21 +136,23 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_URL="auth/"
+LOGIN_URL = "auth/"
 
+import firebase_admin
+import json
+from firebase_admin import credentials, storage
 
+# Initialize Firebase
+CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'False') == 'True'
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-#import firebase_admin
-#from firebase_admin import credentials, storage
 
 # Initialize Firebase Admin
-#CSRF_TRUSTED_ORIGINS = ["https://mygallery2-production.up.railway.app/"]
-CSRF_COOKIE_SECURE = False
-
-"""# Initialize Firebase Admin
-cred = credentials.Certificate(r"foto\face-recognition-3ba91-firebase-adminsdk-oxih3-fb8827bdc6.json")
+firebase_json = os.getenv("FIREBASE_CREDENTIALS_JSON")
+cred = credentials.Certificate(json.loads(firebase_json))
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'face-recognition-3ba91.appspot.com'
 })
 
-DEFAULT_FILE_STORAGE = 'foto.storages.backends.firebase.FirebaseStorage'"""
+DEFAULT_FILE_STORAGE = 'foto.storages.backends.firebase.FirebaseStorage'

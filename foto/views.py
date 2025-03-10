@@ -14,7 +14,7 @@ from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 def home(request):
-    return redirect("fetch")
+    return redirect("auth")
 
 
 
@@ -22,7 +22,8 @@ def home(request):
 def upload(request):
     events=set(data=dataset.objects.all().event.value())
     data=dataset.objects.filter(event_icontains="f{events}")
-    return HttpResponse("hi")
+    return render(request,"explore.html",{"events":events,"data":data})
+   
 
     
     
@@ -37,7 +38,7 @@ from .models import dataset  # Import your model
 from django.db.models import Sum 
 
 @csrf_exempt
-#@login_required(login_url="auth")
+@login_required(login_url="auth")
 def fetch(request):
     if request.method == "POST":
         # Handle like button click
@@ -163,6 +164,7 @@ def sign_up(reuqest):
     if reuqest.method=="POST":
         email=reuqest.POST.get("email")
         password=reuqest.POST.get("password")
+        image=reuqest.FILES.get("profile_image")
 
         
         user=User.objects.filter(username=email)
@@ -172,7 +174,7 @@ def sign_up(reuqest):
         
         user.set_password(password)
         user.save()
-        profile.objects.create(user=user)
+        profile.objects.create(user=user,avater=image)
         
         redirect("auth")
 
@@ -190,7 +192,7 @@ import os
 from django.conf import settings
 
 def ai_photos(request):
-    return HttpResponse("notavalible")
+    return HttpResponse("This page is used to show the photos of the user which are present in the main gallery database ")
 """    media_path = settings.MEDIA_ROOT
     profile_inst=profile.objects.get(user=request.user)
     a=int(profile_inst.user.id)
@@ -214,7 +216,7 @@ def ai_photos(request):
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 def generate_embedding(request):
-    return HttpResponse("notavalible")
+    return HttpResponse("This page takes the 5 images of the user to identify the user in the main gallery database it basically generate the embedding of the face of the user due to computation constrain i was not able to host this page ")
 """    inst_=profile.objects.get(user=request.user)
     
     if request.method == "POST":
