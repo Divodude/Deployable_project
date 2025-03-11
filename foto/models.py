@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 class profile(models.Model):
     
     user=models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)
-    avater=models.ImageField(null=True,default="dr_strange.jpg")
+    avater=models.ImageField(upload_to="profile/",null=True,default="dr_strange.jpg")
     #embedding=models.FileField(null=True,default=None)
     uploads=models.ManyToManyField("dataset",blank=True)
     
@@ -38,6 +38,7 @@ class dataset(models.Model):
     name=models.CharField(null=True,max_length=50)
     likes=models.IntegerField(null=True,default=0)
     images = models.FileField(upload_to='images/',null=False,default="userimages\images\Screenshot_4.png")
+    uploaded_by=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
 
 
