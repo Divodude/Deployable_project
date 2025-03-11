@@ -87,7 +87,8 @@ def fetch(request):
                     name=name,
                     event=album,
                     date=date,
-                    images=i
+                    images=i,
+                    uploaded_by=request.user
                 )
                 db.save()
 
@@ -110,6 +111,7 @@ def fetch(request):
     events = [obj.event for obj in data]
     events = set(events)
     total_likes = dataset.objects.aggregate(total_likes=Sum('likes'))['total_likes']
+
 
     return render(request, "index.html", {
         "clubs":clubdb.objects.all(),
@@ -169,7 +171,7 @@ def sign_up(reuqest):
         
         user=User.objects.filter(username=email)
         if user.exists():
-            return HttpResponse("user exist")
+            return redirect("auth")
         user=User.objects.create_user(username=email)
         
         user.set_password(password)
