@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 
 
-# Create your views here.
+# Create your views heree.
 def home(request):
     return redirect("auth")
 
