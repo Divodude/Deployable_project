@@ -57,7 +57,7 @@ schedule==1.2.2
 six==1.17.0
 sqlparse==0.5.3
 termcolor==2.5.0
-typing_extensions==4.12.2
+typing_extensions==4.12.2 
 tzdata==2025.1
 uritemplate==4.1.1
 urllib3==2.3.0
